@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost Soldier: Stillness</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container">
+
+    <!-- Szenen -->
+    <img id="wald" src="assets/images/wald.jpg" class="scene hidden">
+    <img id="cabin_out" src="assets/images/cabin_out.jpg" class="scene hidden">
+    <img id="cabin_in" src="assets/images/cabin_in.jpg" class="scene hidden">
+    <img id="clearing" src="assets/images/clearing.jpg" class="scene hidden">
+    
+    <!-- End Szenen -->
+    <img id="end_isolation" src="assets/images/cabin_in.jpg" class="scene hidden end-isolation">
+    <img id="end_hope" src="assets/images/clearing.jpg" class="scene hidden">
+    <img id="end_safe" src="assets/images/cabin_in.jpg" class="scene hidden">
+    <img id="end_danger" src="assets/images/clearing.jpg" class="scene hidden">
+    <img id="end_despair" src="assets/images/despair.jpg" class="scene hidden end-despair">
+    <img id="end_secret" src="assets/images/funk.jpg" class="scene hidden">
+
+    <!-- Overlays für Entscheidungen (KEIN hidden mehr hier!) -->
+    <img id="fruit" src="assets/images/fruit.jpg" class="overlay-choice">
+    <img id="funk" src="assets/images/funk.jpg" class="overlay-choice">
+    <img id="lighter" src="assets/images/lighter.jpg" class="overlay-choice">
+    <img id="path" src="assets/images/path.jpg" class="overlay-choice">
+    <img id="smoke" src="assets/images/smoke.jpg" class="overlay-choice">
+    <img id="wasser" src="assets/images/wasser.jpg" class="overlay-choice">
+
+    <!-- Vignette Overlay -->
+    <div id="vignette"></div>
+    
+    <!-- Black Transition Overlay -->
+    <div id="black-transition"></div>
+
+    <!-- UI Layer -->
+    <div id="ui">
+      <div id="start-message">Click / Tap to Start</div>
+      <div id="choices" class="hidden">
+        <div class="choice" data-choice="A">Option A</div>
+        <div class="choice" data-choice="B">Option B</div>
+      </div>
+      
+      <!-- End Screen -->
+      <div id="end-screen" class="hidden">
+        <div id="end-text"></div>
+        <button id="restart-btn">Neustart</button>
+      </div>
+    </div>
+
+    <!-- Audio -->
+    <audio id="sound-wald" src="assets/sounds/wald.wav" loop></audio>
+    <audio id="sound-wasser" src="assets/sounds/wasser.wav"></audio>
+    <audio id="sound-funk" src="assets/sounds/funk.wav"></audio>
+    <audio id="sound-fruit" src="assets/sounds/fruit.wav"></audio>
+    <audio id="sound-lighter" src="assets/sounds/lighter.wav"></audio>
+    <audio id="sound-path" src="assets/sounds/path.wav"></audio>
+    <audio id="sound-smoke" src="assets/sounds/smoke.wav"></audio>
+    <audio id="sound-cabin-voiceover" src="assets/sounds/cabin_in_voiceover.wav"></audio>
+    <audio id="sound-signal" src="assets/sounds/signal.wav"></audio>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
