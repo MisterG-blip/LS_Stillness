@@ -1,0 +1,630 @@
+/* ─────────────────────────────────────────────
+   style.css  —  Lost Soldier: Stillness
+   ───────────────────────────────────────────── */
+
+/* --- Reset & Grundlayout --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Georgia', serif;
+}
+
+/* --- Hauptcontainer --- */
+#container {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: black;
+  overflow: hidden;
+}
+
+/* --- Szenenbilder (dynamisch per JS erzeugt) --- */
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transition: filter 1s ease;
+}
+
+/* --- Overlay-Entscheidungsbilder (dynamisch per JS erzeugt) --- */
+.overlay-choice {
+  position: absolute;
+  width: 20%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease, transform 0.3s ease;
+  z-index: 10;
+  border: clamp(4px, 0.8vw, 8px) solid black;
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+.overlay-choice:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.4);
+}
+
+/* --- Vignette --- */
+#vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.6) 100%);
+  transition: opacity 2s ease;
+  z-index: 50;
+  opacity: 0.5;
+}
+
+/* --- Schwarze Überblende --- */
+#black-transition {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: black;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  z-index: 60;
+}
+
+/* --- Episodentitel --- */
+#episode-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-family: 'Georgia', serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0;
+  z-index: 70;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+#episode-title.visible {
+  opacity: 1;
+}
+
+#episode-title.fade-out {
+  opacity: 0;
+}
+
+/* --- UI Layer --- */
+#ui {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* --- Start-Nachricht --- */
+#start-message {
+  pointer-events: all;
+  user-select: none;
+  color: white;
+  font-size: clamp(1rem, 3vw, 2rem);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+#start-message:hover {
+  background: rgba(0, 0, 0, 0.88);
+}
+
+/* --- End Screen --- */
+#end-screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: all;
+  z-index: 200;
+  padding-bottom: 3rem;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+#end-screen.visible {
+  opacity: 1;
+}
+
+#end-screen.fade-out {
+  opacity: 0;
+}
+
+#end-text {
+  color: white;
+  font-size: clamp(0.85rem, 2vw, 1.3rem);
+  text-align: center;
+  max-width: 80%;
+  margin-bottom: 2rem;
+  padding: 1.5rem 2rem;
+  line-height: 1.8;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 8px;
+}
+
+#restart-btn {
+  padding: 0.9rem 2.2rem;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: white;
+  background: rgba(40, 40, 40, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  letter-spacing: 0.1em;
+  transition: background 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+}
+
+#restart-btn:hover {
+  background: rgba(90, 90, 90, 0.9);
+  border-color: white;
+  transform: scale(1.05);
+}
+
+/* --- Utility --- */
+.hidden {
+  display: none !important;
+}
+
+/* --- End Button Reihe --- */
+#end-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+#next-btn {
+  padding: 0.9rem 2.2rem;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: white;
+  background: rgba(20, 60, 20, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+  letter-spacing: 0.1em;
+  transition: background 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+}
+
+#next-btn:hover {
+  background: rgba(40, 100, 40, 0.9);
+  border-color: white;
+  transform: scale(1.05);
+}
+
+/* ─── Episodenübersicht ────────────────────────── */
+#episode-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+#menu-title {
+  color: white;
+  font-family: 'Georgia', serif;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+#menu-episodes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.menu-episode-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.5rem;
+  background: rgba(30, 30, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  letter-spacing: 0.05em;
+}
+
+.menu-episode-btn:hover:not(:disabled) {
+  background: rgba(60, 60, 60, 0.95);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.02);
+}
+
+.menu-episode-btn.completed {
+  border-color: rgba(100, 180, 100, 0.5);
+}
+
+.menu-episode-btn.completed .ep-status {
+  color: #6db86d;
+}
+
+.menu-episode-btn.next {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(50, 50, 50, 0.95);
+}
+
+.menu-episode-btn.locked {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ep-label {
+  text-align: left;
+}
+
+.ep-status {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+#menu-endings {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: clamp(0.65rem, 1.3vw, 0.8rem);
+  font-family: monospace;
+  text-align: center;
+  max-width: 400px;
+}
+
+#menu-reset-btn {
+  margin-top: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+#menu-reset-btn:hover {
+  color: rgba(255, 100, 100, 0.8);
+  border-color: rgba(255, 100, 100, 0.4);
+}
+
+/* ─── Endings Galerie ──────────────────────────── */
+#endings-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#endings-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+#endings-back-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: monospace;
+  font-size: clamp(0.65rem, 1.3vw, 0.8rem);
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+#endings-back-btn:hover {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+#endings-title {
+  color: white;
+  font-family: monospace;
+  font-size: clamp(0.8rem, 2vw, 1.1rem);
+  letter-spacing: 0.3em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* ─── Karten-Grid ──────────────────────────────── */
+#endings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ending-card {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 15, 15, 0.9);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  cursor: default;
+}
+
+.ending-card.unlocked {
+  cursor: pointer;
+}
+
+.ending-card.unlocked:hover {
+  transform: scale(1.03);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.ending-card-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+}
+
+.ending-card-img.locked-img {
+  background: #0a0a0a;
+}
+
+.ending-card-episode {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.25rem 0.5rem;
+  font-family: monospace;
+  font-size: clamp(0.55rem, 1vw, 0.65rem);
+  color: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  letter-spacing: 0.05em;
+}
+
+.ending-card-body {
+  padding: 0.6rem 0.75rem;
+}
+
+.ending-card-id {
+  font-family: monospace;
+  font-size: clamp(0.6rem, 1.1vw, 0.7rem);
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.3rem;
+}
+
+.ending-card-text {
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.6rem, 1vw, 0.7rem);
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.5;
+  margin-bottom: 0.4rem;
+}
+
+.ending-card-count {
+  font-family: monospace;
+  font-size: clamp(0.55rem, 1vw, 0.65rem);
+  color: rgba(255, 255, 255, 0.25);
+  text-align: right;
+}
+
+/* Gesperrte Karte — Redacted-Style */
+.ending-card.locked .ending-card-id.redacted {
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.15em;
+}
+
+.ending-card.locked .ending-card-text.redacted {
+  font-family: monospace;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.05em;
+  line-height: 1.8;
+}
+
+/* ─── Ending Detail ────────────────────────────── */
+#ending-detail {
+  position: absolute;
+  inset: 0;
+}
+
+/* Hintergrundbild mit Filter — separat damit Text nicht gefiltert wird */
+#ending-detail-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+#ending-detail-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  gap: 0.75rem;
+}
+
+#ending-detail-back {
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.6);
+  font-family: monospace;
+  font-size: clamp(0.65rem, 1.3vw, 0.8rem);
+  letter-spacing: 0.1em;
+  padding: 0.4rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+#ending-detail-back:hover {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+#ending-detail-label {
+  font-family: monospace;
+  font-size: clamp(0.65rem, 1.3vw, 0.8rem);
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+#ending-detail-id {
+  font-family: monospace;
+  font-size: clamp(0.8rem, 1.8vw, 1rem);
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+#ending-detail-text {
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.85rem, 2vw, 1.2rem);
+  color: white;
+  line-height: 1.8;
+  max-width: 70%;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+#ending-detail-count {
+  font-family: monospace;
+  font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.15em;
+}
+
+/* ─── Menu Footer ──────────────────────────────── */
+#menu-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+#menu-endings-btn {
+  padding: 0.7rem 2rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: monospace;
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+#menu-endings-btn:hover {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Splash Screen — identisch zu #episode-title ─ */
+#splash-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 400;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+
+#splash-screen.visible {
+  opacity: 1;
+}
+
+#splash-screen.fade-out {
+  opacity: 0;
+}
+
+#splash-subtitle {
+  color: white;
+  font-family: 'Georgia', serif;
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+#splash-title {
+  color: white;
+  font-family: 'Georgia', serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}

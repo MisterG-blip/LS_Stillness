@@ -1,0 +1,429 @@
+{
+  "id": "episode_2",
+  "label": "Episode 2 — Dead Air",
+  "episodeState": {
+    "nervositaet": 30,
+    "flags": {
+      "noAnswer": false
+    }
+  },
+  "scenes": [
+    {
+      "id": "dialog1",
+      "background": "assets/video/ep2_leitstelle.mp4",
+      "ambientSound": "assets/sounds/ep2_ambiente.wav",
+      "ambientVolume": 1.0,
+      "staticBackground": false,
+      "voiceover": "assets/sounds/ep2_1_dialog.mp3",
+      "voiceoverDelay": 3000,
+      "autoAdvanceAfterVoiceover": 14000,
+      "nextScene": "choice_1"
+    },
+    {
+      "id": "choice_1",
+      "staticBackground": true,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "choice_a",
+          "image": "assets/images/ep2_radar.jpg",
+          "sound": "assets/sounds/ep2_radar.wav",
+          "position": { "side": "left", "bottom": "10%" },
+          "stateEffect": { "nervositaet": 0, "hope": 0 },
+          "nextScene": "choice_2"
+        },
+        {
+          "id": "choice_b",
+          "image": "assets/images/ep2_coffee.jpg",
+          "position": { "side": "right", "bottom": "10%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 0 },
+          "nextScene": "coffee_1"
+        }
+      ],
+      "timeout": {
+        "seconds": 10,
+        "stateEffect": { "nervositaet": 15, "hope": -10 },
+        "nextScene": "choice_2"
+      }
+    },
+    {
+      "id": "coffee_1",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_2"
+    },
+    {
+      "id": "choice_2",
+      "staticBackground": true,
+      "displayDuration": 10000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_toilette.jpg",
+          "sound": "assets/sounds/ep2_4_toilett.mp3",
+          "position": { "side": "left", "bottom": "12%" },
+          "setFlags": { "noAnswer": true },
+          "stateEffect": { "nervositaet": 50, "hope": 0 },
+          "nextScene": "flush"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",          
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 10 },
+          "nextScene": "coffee_2"
+        }
+      ],
+      "timeout": {
+        "seconds": 15,
+        "stateEffect": { "nervositaet": 20, "hope": -15 },
+        "nextScene": "choice_3"
+      }
+    },
+    {
+      "id": "flush",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_flush.mp3",
+      "voiceoverDelay": 5000,
+      "autoAdvanceAfterVoiceover": 14000,
+      "nextScene": "choice_5"
+    },
+    {
+      "id": "coffee_2",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_3"
+    },
+    {
+      "id": "choice_3",
+      "staticBackground": true,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_speaker.jpg",
+          "sound": "assets/sounds/ep2_2_speaker.mp3",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "nervositaet": 10 },
+          "nextScene": "dialog_2"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",
+          "sound": "assets/sounds/ep2_coffee_d.wav",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 5000,
+          "stateEffect": { "nervositaet": -10, "isolation": 15 },
+          "nextScene": "coffee_3"
+        }
+      ],
+      "timeout": {
+        "seconds": 30,
+        "stateEffect": { "nervositaet": 100, "hope": -15 },
+        "setFlags": { "noAnswer": true },
+        "nextScene": "__ending__"
+      }
+    },
+    {
+      "id": "coffee_3",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_3"
+    },
+    {
+      "id": "dialog_2",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_3_dialog.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_4"
+    },
+    {
+      "id": "choice_4",
+      "staticBackground": true,
+      "displayDuration": 10000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_radar.jpg",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "nervositaet": 0, "hope": 0 },
+          "nextScene": "choice_41"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 10 },
+          "nextScene": "coffee_4"
+        }
+      ],
+      "timeout": {
+        "seconds": 15,
+        "stateEffect": { "nervositaet": 20, "hope": -15 },
+        "nextScene": "choice_41"
+      }
+    },
+    {
+      "id": "coffee_4",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_41"
+    },
+    {
+      "id": "choice_41",
+      "staticBackground": true,
+      "displayDuration": 10000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_toilette.jpg",
+          "position": { "side": "left", "bottom": "12%" },
+          "setFlags": { "noAnswer": true },
+          "stateEffect": { "nervositaet": 50, "hope": 0 },
+          "nextScene": "flush_2"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",          
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 10 },
+          "nextScene": "coffee_41"
+        }
+      ],
+      "timeout": {
+        "seconds": 30,
+        "stateEffect": { "nervositaet": 20, "hope": -15 },
+        "nextScene": "choice_5"
+      }
+    },
+    {
+      "id": "flush_2",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_flush.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_5"
+    },
+    {
+      "id": "coffee_41",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_5"
+    },
+    {
+      "id": "choice_5",
+      "staticBackground": true,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_speaker.jpg",
+          "sound": "assets/sounds/ep2_4_ruf.mp3",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "nervositaet": 15, "hope": -15 },
+          "nextScene": "choice_6"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 15 },
+          "nextScene": "coffee_5"
+        }
+      ],
+      "timeout": {
+        "seconds": 20,
+        "stateEffect": { "nervositaet": 30, "hope": -15 },
+        "nextScene": "__ending__"
+      }
+    },
+    {
+      "id": "coffee_5",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_6"
+    },
+    {
+      "id": "choice_6",
+      "staticBackground": true,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_speaker.jpg",
+          "sound": "assets/sounds/ep2_4_ruf2.mp3",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "nervositaet": 15, "hope": -15 },
+          "nextScene": "choice_7"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 15 },
+          "nextScene": "coffee_6"
+        }
+      ],
+      "timeout": {
+        "seconds": 20,
+        "stateEffect": { "nervositaet": 30, "hope": -15 },
+        "nextScene": "__ending__"
+      }
+    },
+    {
+      "id": "coffee_6",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_7"
+    },
+    {
+      "id": "choice_7",
+      "staticBackground": true,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_speaker.jpg",
+          "sound": "assets/sounds/ep2_4_ruf3.mp3",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "nervositaet": 15, "hope": -15 },
+          "nextScene": "choice_8"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 15 },
+          "nextScene": "coffee_7"
+        }
+      ],
+      "timeout": {
+        "seconds": 20,
+        "stateEffect": { "nervositaet": 30, "hope": -15 },
+        "nextScene": "__ending__"
+      }
+    },
+    {
+      "id": "coffee_7",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_8"
+    },
+    {
+      "id": "choice_8",
+      "staticBackground": true,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "choice_c",
+          "image": "assets/images/ep2_speaker.jpg",
+          "sound": "assets/sounds/ep2_4_ruf5.mp3",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "nervositaet": 15, "hope": -15 },
+          "nextScene": "choice_6"
+        },
+        {
+          "id": "choice_d",
+          "image": "assets/images/ep2_coffee.jpg",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "nervositaet": -10, "isolation": 15 },
+          "nextScene": "coffee_8"
+        }
+      ],
+      "timeout": {
+        "seconds": 20,
+        "stateEffect": { "nervositaet": 30, "hope": -15 },
+        "nextScene": "__ending__"
+      }
+    },
+    {
+      "id": "coffee_8",
+      "staticBackground": true,
+      "voiceover": "assets/sounds/ep2_coffee.mp3",
+      "voiceoverDelay": 1000,
+      "autoAdvanceAfterVoiceover": 9000,
+      "nextScene": "choice_6"
+    }
+  ],
+
+  "endings": [
+    {
+      "id": "ep2_end_keine_antwort",
+      "title": "Pflichtverletzung",
+      "priority": 0,
+      "condition": {
+        "flag": "noAnswer", "is": true
+      },
+      "background": "assets/images/ep2_leitstelle.jpg",
+      "backgroundFilter": "brightness(0.2) contrast(1.7) saturate(0.2)",
+      "stopAmbient": true,
+      "text": "Leitstelle unbesetzt – Lage unklar.",
+      "trackingKey": "ep2_noanswer"   },
+    {
+      "id": "ep2_end_breakdown",
+      "title": "Unsicherheit",
+      "priority": 1,
+      "condition": {
+        "any": [
+          { "field": "nervositaet", "op": ">=", "value": 50 }          
+        ]
+      },
+      "background": "assets/images/ep2_leitstelle.jpg",
+      "backgroundFilter": "brightness(0.5) contrast(1.5) saturate(0.4)",
+      "stopAmbient": true,
+      "text": "Einsatzkoordination gestört – Lage neu bewerten.",
+      "trackingKey": "ep2_breakdown"
+    },
+    {
+      "id": "ep2_end_calm",
+      "title": "Routine",
+      "priority": 2,
+      "condition": {
+        "allOf": [
+          { "field": "nervositaet", "op": "<", "value": 50 }
+        ]
+      },
+      "background": "assets/images/ep2_leitstelle.jpg",
+      "backgroundFilter": "brightness(1.0) contrast(1.5) saturate(1.0)",
+      "stopAmbient": true,
+      "text": "Verbindung verloren - SAR Einheit anfragen.",
+      "trackingKey": "ep2_calm"
+    },
+    {
+      "id": "ep2_end_fallback",
+      "priority": 99,
+      "condition": { "always": true },
+      "background": "assets/images/ep2_leitstelle.jpg",
+      "backgroundFilter": "brightness(0.5) contrast(1.5) saturate(0.2)",
+      "text": "Verbindung verloren – Lage neu bewerten.",
+      "trackingKey": "ep2_calm"
+    }
+  ]
+}
+      
+      

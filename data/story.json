@@ -1,0 +1,14 @@
+{
+  "title": "Lost Soldier: Stillness",
+  "startState": {
+    "durst": 50,
+    "hunger": 50,
+    "isolation": 50,
+    "hope": 50
+  },
+  "episodes": [
+    "data/episodes/episode_1.json",
+    "data/episodes/episode_2.json",
+    "data/episodes/episode_3.json"
+  ]
+}

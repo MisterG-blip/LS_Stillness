@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lost Soldier: Stillness</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container">
+
+    <!-- Vignette -->
+    <div id="vignette"></div>
+
+    <!-- Schwarze Überblende -->
+    <div id="black-transition"></div>
+
+    <!-- Episodentitel (eingeblendet auf schwarzem Grund) -->
+    <div id="episode-title" class="hidden"></div>
+
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="hidden">
+      <div id="splash-subtitle">LOST SOLDIER</div>
+      <div id="splash-title">Echo Protocol</div>
+    </div>
+
+    <!-- Episodenübersicht -->
+    <div id="episode-menu" class="hidden"></div>
+
+    <!-- Endings Galerie -->
+    <div id="endings-menu" class="hidden"></div>
+
+    <!-- UI Layer -->
+    <div id="ui">
+      <div id="start-message">Click / Tap to Start</div>
+
+      <!-- End Screen -->
+      <div id="end-screen" class="hidden">
+        <div id="end-text"></div>
+        <div id="end-buttons">
+          <button id="next-btn" class="hidden">Weiter</button>
+          <button id="restart-btn">Neustart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ES-Module: main.js ist Einstiegspunkt -->
+  <script type="module" src="main.js"></script>
+</body>
+</html>

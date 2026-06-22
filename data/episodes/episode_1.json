@@ -1,0 +1,207 @@
+{
+  "id": "episode_1",
+  "label": "Episode 1 - Stillness",
+  "flags": {
+    "smoke":   false   
+  },
+  "scenes": [
+    {
+      "id": "wald",
+      "background": "assets/images/ep1_wald.jpg",
+      "ambientSound": "assets/sounds/ep1_wald.wav",
+      "ambientLoop": true,
+      "ambientVolume": 1.0,
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "wasser",
+          "image": "assets/images/ep1_wasser.jpg",
+          "sound": "assets/sounds/ep1_wasser.wav",
+          "position": { "side": "right", "bottom": "10%" },
+          "stateEffect": { "durst": -30, "hope": -10 },
+          "nextScene": "cabin_out"
+        },
+        {
+          "id": "funk",
+          "image": "assets/images/ep1_funk.jpg",
+          "sound": "assets/sounds/ep1_funk.wav",
+          "confirmSound": "assets/sounds/ep1_funk2.wav",
+          "position": { "side": "left", "bottom": "10%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "hope": 20, "durst": 10 },
+          "nextScene": "cabin_out"
+        }
+      ],
+      "timeout": {
+        "seconds": 10,
+        "stateEffect": { "hope": -20, "isolation": 15, "durst": 10, "hunger": 10 },
+        "nextScene": "cabin_out"
+      }
+    },
+    {
+      "id": "cabin_out",
+      "background": "assets/images/ep1_cabin_out.jpg",
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "fruit",
+          "image": "assets/images/ep1_fruit.jpg",
+          "sound": "assets/sounds/ep1_fruit.wav",
+          "position": { "side": "left", "bottom": "12%" },
+          "stateEffect": { "hunger": -30, "isolation": 10 },
+          "nextScene": "clearing"
+        },
+        {
+          "id": "lighter",
+          "image": "assets/images/ep1_lighter.jpg",
+          "sound": "assets/sounds/ep1_lighter.wav",
+          "position": { "side": "right", "bottom": "12%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "isolation": -10 },
+          "nextScene": "cabin_in"
+        }
+      ],
+      "timeout": {
+        "seconds": 10,
+        "stateEffect": { "hope": -20, "isolation": 15, "durst": 10, "hunger": 10 },
+        "nextScene": "clearing"
+      }
+    },
+    {
+      "id": "cabin_in",
+      "background": "assets/images/ep1_cabin_in.jpg",
+      "voiceover": "assets/sounds/ep1_cabin_in_voiceover.wav",
+      "voiceoverDelay": 5000,
+      "autoAdvanceAfterVoiceover": 5000,
+      "nextScene": "clearing"
+    },
+    {
+      "id": "clearing",
+      "background": "assets/images/ep1_clearing.jpg",
+      "displayDuration": 5000,
+      "choices": [
+        {
+          "id": "path",
+          "image": "assets/images/ep1_path.jpg",
+          "sound": "assets/sounds/ep1_path.wav",
+          "position": { "side": "left", "bottom": "15%" },
+          "stateEffect": { "isolation": 20 },
+          "nextScene": "__ending__"
+        },
+        {
+          "id": "smoke",
+          "image": "assets/images/ep1_smoke.jpg",
+          "sound": "assets/sounds/ep1_smoke.wav",
+          "setFlags": { "smoke": true },
+          "position": { "side": "right", "bottom": "15%" },
+          "delayAfterFirst": 3000,
+          "stateEffect": { "isolation": -10, "hope": 20 },
+          "nextScene": "__ending__"
+        }
+      ],
+      "timeout": {
+        "seconds": 10,
+        "stateEffect": { "hope": -20, "isolation": 15, "durst": 10, "hunger": 10 },
+        "nextScene": "__ending__"
+      }
+    }
+  ],
+  "endings": [
+    {
+      "id": "end_despair",
+      "title": "Verzweiflung",
+      "priority": 1,
+      "condition": {
+        "any": [
+          { "field": "hope", "op": "<=", "value": 30 },
+          { "allOf": [
+            { "field": "durst",  "op": ">=", "value": 80 },
+            { "field": "hunger", "op": ">=", "value": 80 }
+          ]},
+          { "field": "timeouts", "op": ">=", "value": 2 }
+        ]
+      },
+      "background": "assets/images/ep1_despair.jpg",
+      "backgroundFilter": "brightness(1.8) contrast(1.5) saturate(0.3)",
+      "stopAmbient": true,
+      "text": "Der Wille ermüdet, bevor das Leben endet.<br><br>— nach Arthur Schopenhauer",
+      "trackingKey": "despair"
+    },
+    {
+      "id": "end_isolation",
+      "title": "Isolation",
+      "priority": 2,
+      "condition": {
+        "allOf": [
+          { "field": "isolation", "op": ">=", "value": 80 },
+          { "field": "hope",      "op": "<=", "value": 60 }
+        ]
+      },
+      "background": "assets/images/ep1_cabin_in.jpg",
+      "backgroundFilter": "brightness(1.6) contrast(1.3) saturate(0.6)",
+      "text": "„Man muss allein sein, um ganz zu sich zu kommen.\"<br><br>— Franz Kafka",
+      "trackingKey": "isolation"
+    },
+    {
+      "id": "end_hope",
+      "title": "Hoffnung",
+      "priority": 3,
+      "condition": {
+        "allOf": [
+          { "field": "isolation", "op": ">=", "value": 50 },
+          { "field": "isolation", "op": "<=", "value": 70 },
+          { "field": "hope",      "op": ">=", "value": 70 }
+        ]
+      },
+      "background": "assets/images/ep1_clearing.jpg",
+      "text": "„Man muss weitermachen.<br>Ich kann nicht weitermachen.<br>Ich werde weitermachen.\"<br><br>— Samuel Beckett",
+      "trackingKey": "hope"
+    },
+    {
+      "id": "end_safe",
+      "title": "Sicherheit",
+      "priority": 4,
+      "condition": {
+        "allOf": [
+          { "field": "isolation", "op": "<=", "value": 50 },
+          { "field": "hope",      "op": ">=", "value": 50 },
+          { "field": "hope",      "op": "<=", "value": 70 }
+        ]
+      },
+      "background": "assets/images/ep1_cabin_in.jpg",
+      "text": "„Sicherheit ist kein Ersatz für Freiheit.\"<br><br>— Hannah Arendt",
+      "trackingKey": "safe"
+    },
+    {
+      "id": "end_danger",
+      "title": "Gefahr",
+      "priority": 5,
+      "condition": {
+        "allOf": [
+          { "field": "hope",      "op": ">=", "value": 70 },
+          { "field": "isolation", "op": "<=", "value": 40 }
+        ]
+      },
+      "background": "assets/images/ep1_clearing.jpg",
+      "text": "„Wer mit Ungeheuern kämpft,<br>mag zusehen, dass er nicht dabei<br>zum Ungeheuer wird.\"<br><br>— Friedrich Nietzsche",
+      "trackingKey": "danger"
+    },
+    {
+      "id": "end_fallback",
+      "priority": 99,
+      "condition": { "always": true },
+      "background": "assets/images/ep1_cabin_in.jpg",
+      "text": "„Wer ein Warum zum Leben hat, erträgt fast jedes Wie.\"<br><br>— Viktor Frankl",
+      "trackingKey": "safe"
+    }
+  ],
+  "secretEnding": {
+    "id": "end_secret",
+    "requiredTrackingKeys": ["despair", "isolation", "hope", "safe", "danger"],
+    "background": "assets/images/ep1_funk.jpg",
+    "sound": "assets/sounds/signal.wav",
+    "stopAmbient": true,
+    "resetTracking": true,
+    "text": "<span style=\"font-family: monospace; color: #00ff00;\">[INTRUDER SIGNAL DETECTED]<br><br>Frequenz: 4625 kHz<br>Timestamp: 03:47 UTC<br>Status: [STATIC]<br><br>\"...der Vorfall... war kein Zufall...\"<br><br>[SIGNAL LOST - TRACE UNAVAILABLE]</span>"
+  }
+}
