@@ -100,6 +100,38 @@
         "stateEffect": { "hope": -20, "isolation": 15, "durst": 10, "hunger": 10 },
         "nextScene": "__ending__"
       }
+    },
+    {
+      "id": "tv_room",
+      "type": "tv",
+      "background": "assets/images/ep3_tv_room.jpg",
+      "ambientSound": "assets/sounds/ep3_tv_room.wav",
+      "ambientLoop": true,
+      "ambientVolume": 0.4,
+      "tv": {
+        "frameImage": "assets/images/ep3_tv_frame.png",
+        "screen": { "x": 34, "y": 26, "width": 32, "height": 24 },
+        "duration": 60000,
+        "defaultChannel": 0,
+        "channels": [
+          {
+            "id": "ch1",
+            "video": "assets/video/ep3_tv_ch1_placeholder.mp4",
+            "hotspot": { "x": 63, "y": 30, "width": 5, "height": 5 }
+          },
+          {
+            "id": "ch2",
+            "video": "assets/video/ep3_tv_ch2_placeholder.mp4",
+            "hotspot": { "x": 63, "y": 37, "width": 5, "height": 5 }
+          },
+          {
+            "id": "ch3",
+            "video": "assets/video/ep3_tv_ch3_placeholder.mp4",
+            "hotspot": { "x": 63, "y": 44, "width": 5, "height": 5 }
+          }
+        ]
+      },
+      "nextScene": "__ending__"
     }
   ],
   "endings": [

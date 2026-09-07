@@ -15,7 +15,8 @@ import {
   fadeOutOverlays,
   disableAllOverlayClicks,
   updateVignette,
-  hideEndScreen
+  hideEndScreen,
+  showTv
 } from './renderer.js';
 
 let storyData    = null;
@@ -150,6 +151,10 @@ async function runScene(scene) {
   }
   updateVignette(state.values.isolation ?? 50);
 
+  if (scene.type === 'tv') {
+    return await runTvScene(scene);
+  }
+
   if (scene.voiceover) {
     await delay(scene.voiceoverDelay ?? 0);
     audio.play(scene.voiceover);
@@ -219,6 +224,38 @@ async function runLoopScene(scene) {
     const allVisible = (scene.choices[1]?.delayAfterFirst ?? 3000);
     timeoutTimer = setTimeout(onSilence, allVisible + (scene.loopTimeout ?? 12000));
   });
+}
+
+// ─── TV-Szene (mehrere simultane Videos, umschaltbar) ──
+
+/**
+ * Zeigt N Videokanäle, die alle gleichzeitig/synchron laufen.
+ * Der Spieler kann per Hotspot-Klick zwischen ihnen umschalten
+ * (nur der aktive Kanal ist sichtbar & hörbar). Es werden bewusst
+ * KEINE stateEffects/Flags gesetzt — reine Informationsvermittlung,
+ * der Spieler entscheidet selbst, welche Infos er sich holt.
+ * Nach tv.duration (alle Kanäle gleich lang) endet die Szene.
+ */
+async function runTvScene(scene) {
+  const tv = scene.tv || {};
+  const tvHandle = showTv(tv);
+  let active = tv.defaultChannel ?? 0;
+
+  tvHandle.hotspotEls.forEach((el, i) => {
+    if (!el) return;
+    el.onclick = () => {
+      if (i === active) return;
+      active = i;
+      tvHandle.setActiveChannel(active);
+    };
+  });
+
+  await delay(tv.duration ?? 60000);
+
+  tvHandle.hotspotEls.forEach(el => { if (el) el.onclick = null; });
+  tvHandle.destroy();
+
+  return scene.nextScene ?? null;
 }
 
 // ─── Normale Entscheidungen ────────────────────────

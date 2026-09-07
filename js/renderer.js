@@ -206,6 +206,79 @@ export function disableAllOverlayClicks() {
   });
 }
 
+// ─── TV-Szene (mehrere simultane Videos, umschaltbar) ──
+
+/**
+ * Baut eine TV-Konfiguration auf: N Video-Elemente (alle laufen
+ * synchron/simultan, nur der aktive Kanal ist sichtbar & hörbar),
+ * ein optionales Rahmenbild darüber, und unsichtbare Klick-Bereiche
+ * (Hotspots) für die "Knöpfe". Alle Koordinaten (screen/hotspot)
+ * sind Prozentwerte relativ zum #container (x, y, width, height
+ * von oben-links aus).
+ *
+ * Gibt ein Handle mit setActiveChannel(index) und destroy() zurück.
+ */
+export function showTv(tv) {
+  const screen = tv.screen || { x: 0, y: 0, width: 100, height: 100 };
+  const defaultChannel = tv.defaultChannel ?? 0;
+
+  const videos = (tv.channels || []).map((channel, i) => {
+    const video = document.createElement('video');
+    video.src = channel.video;
+    video.className = 'tv-screen-video';
+    video.style.left   = screen.x + '%';
+    video.style.top    = screen.y + '%';
+    video.style.width  = screen.width + '%';
+    video.style.height = screen.height + '%';
+    video.autoplay = true;
+    video.muted = true;        // erst stumm laden, aktiver Kanal wird gleich entstummt
+    video.loop = false;        // Kanäle laufen synchron & gleich lang durch
+    video.playsInline = true;
+    video.style.opacity = i === defaultChannel ? '1' : '0';
+    container.appendChild(video);
+    video.play().catch(() => {});
+    return video;
+  });
+
+  let frameEl = null;
+  if (tv.frameImage) {
+    frameEl = createImg(tv.frameImage, 'tv-frame');
+    container.appendChild(frameEl);
+  }
+
+  const hotspotEls = (tv.channels || []).map(channel => {
+    const hs = channel.hotspot;
+    if (!hs) return null;
+    const el = document.createElement('div');
+    el.className = 'tv-hotspot';
+    el.style.left   = hs.x + '%';
+    el.style.top    = hs.y + '%';
+    el.style.width  = hs.width + '%';
+    el.style.height = hs.height + '%';
+    container.appendChild(el);
+    return el;
+  });
+
+  function setActiveChannel(index) {
+    videos.forEach((v, i) => {
+      const isActive = i === index;
+      v.style.opacity = isActive ? '1' : '0';
+      v.muted = !isActive;
+    });
+  }
+
+  // Startkanal hörbar schalten
+  if (videos[defaultChannel]) videos[defaultChannel].muted = false;
+
+  function destroy() {
+    videos.forEach(v => { v.pause(); v.remove(); });
+    if (frameEl) frameEl.remove();
+    hotspotEls.forEach(el => { if (el) { el.onclick = null; el.remove(); } });
+  }
+
+  return { videos, frameEl, hotspotEls, setActiveChannel, destroy };
+}
+
 // ─── Vignette ──────────────────────────────────────
 
 export function updateVignette(isolation) {
