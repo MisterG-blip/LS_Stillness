@@ -10,7 +10,7 @@
   "scenes": [
     {
       "id": "dialog1",
-      "background": "assets/video/ep2_Leitstelle.mp4",
+      "background": "assets/video/ep2_leitstelle.mp4",
       "ambientSound": "assets/sounds/ep2_ambiente.wav",
       "ambientVolume": 1.0,
       "staticBackground": false,
